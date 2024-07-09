@@ -1,11 +1,15 @@
-package ForoAlura.foro.config.errores.security;
+package ForoAlura.foro.config.security;
 
+
+import ForoAlura.foro.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AutenticationService {
+public class AutenticationService implements UserDetailsService {
+
     private final UsuarioRepository usuarioRepository;
 
     public AutenticationService(UsuarioRepository usuarioRepository) {
@@ -14,7 +18,6 @@ public class AutenticationService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return UsuarioRepository.findByNombre(username);
+        return usuarioRepository.findByNombre(username);
     }
-
 }

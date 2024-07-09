@@ -1,4 +1,4 @@
-package ForoAlura.foro.config.errores.security;
+package ForoAlura.foro.config.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

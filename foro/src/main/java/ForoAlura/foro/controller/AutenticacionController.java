@@ -1,7 +1,7 @@
 package ForoAlura.foro.controller;
 
 
-import ForoAlura.foro.config.errores.security.TokenService;
+import ForoAlura.foro.config.security.TokenService;
 import ForoAlura.foro.models.Usuario;
 import ForoAlura.foro.record.curso.autenticacion.DatosAutenticarUsuario;
 import ForoAlura.foro.record.curso.autenticacion.DatosJwtToken;

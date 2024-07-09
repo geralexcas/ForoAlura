@@ -1,6 +1,10 @@
-package ForoAlura.foro.config.errores.security;
+package ForoAlura.foro.config.security;
 
-
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,53 +12,41 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
     private final SecurityFilter securityFilter;
 
-    public SecurityConfiguration(SecurityFilter securityFilter, UserDetailsService userDetailsService) {
+    public SecurityConfiguration(SecurityFilter securityFilter) {
         this.securityFilter = securityFilter;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .csrf().disable()
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers(
-                                "/login").permitAll()
+                        .requestMatchers("/login").permitAll()
                         /* Permitir Urls Swagger */
-                        .requestMatchers(
-                                "/v3/api-docs/**",
-                                "/doc/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/doc/swagger-ui/**").permitAll()
                         /* Fin permitir Urls Swagger */
-                        .anyRequest()
-                        .authenticated())
+                        .anyRequest().authenticated())
                 /* Modificar Response 403 a 401 */
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, ex) -> {
-                    response.setStatus(401);
-                    response.setContentType("application/json");
-                    response.getWriter().write("{ \"message\": \"You are not authenticated.\" }");
-                    /* Fin modificar Response 403 a 401 */
-                })
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint((request, response, ex) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{ \"message\": \"You are not authenticated.\" }");
+                        })
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
@@ -91,7 +83,4 @@ public class SecurityConfiguration {
                         .description("API creada en desarrollo del programa Oracle ONE")
                 );
     }
-
-
-
 }

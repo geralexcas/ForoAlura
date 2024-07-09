@@ -1,5 +1,6 @@
-package ForoAlura.foro.config.errores.security;
+package ForoAlura.foro.config.security;
 
+import ForoAlura.foro.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,12 +8,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
+
     private final UsuarioRepository usuarioRepository;
     private final TokenService tokenService;
 
@@ -35,4 +36,5 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+
 }
