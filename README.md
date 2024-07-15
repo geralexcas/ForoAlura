@@ -87,6 +87,24 @@ spring.flyway.baseline-on-migrate=true
 # Otras configuraciones
 spring.flyway.locations=classpath:db/migration
 ```
+3 Ejecuta las migraciones de la base de datos con Flyway:
+```sh
+mvn flyway:migrate
+```
+## Ejecutar la Aplicación
+Para ejecutar la aplicación, utiliza el siguiente comando
+```sh
+mvn spring-boot:run
+```
+## Contribuciones
+Si deseas contribuir a este proyecto, por favor realiza un fork del repositorio y envía un pull request con tus cambios.
+
+
+
+
+
+
+
 
 
 
