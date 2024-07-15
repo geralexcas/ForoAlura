@@ -59,4 +59,33 @@ El proyecto está organizado en los siguientes paquetes:
 
 1. Clona el repositorio:
    ```sh
-   git clone https://github.com/tu-usuario/ForoAlura.git
+   git clone [https://github.com/tu-usuario/ForoAlura.git](https://github.com/geralexcas/ForoAlura.git)
+ 2.  Configura la base de datos en el archivo application.properties:
+ 3.  ```sh
+     spring.application.name=foro
+
+spring.datasource.url=jdbc:mariadb://localhost:3306/foro
+spring.datasource.username=root
+spring.datasource.password=asus1234
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+
+# Configuración de JPA y Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MariaDBDialect
+# SECRET para la firma del TOKEN
+//api.security.secret=${JWT_SECRET:123456}
+api.security.secret=${JWT_SECRET:123456}
+
+# Configuración de Flyway para migraciones de base de datos
+spring.flyway.url=jdbc:mariadb://localhost:3306/foro
+spring.flyway.user=root
+spring.flyway.password=asus1234
+spring.flyway.baseline-on-migrate=true
+
+# Otras configuraciones
+spring.flyway.locations=classpath:db/migration
+
+1. Ejecuta las migraciones de la base de datos con Flyway:
+
+   
