@@ -60,8 +60,9 @@ El proyecto está organizado en los siguientes paquetes:
 1. Clona el repositorio:
    ```sh
    git clone [https://github.com/tu-usuario/ForoAlura.git](https://github.com/geralexcas/ForoAlura.git)
+   ```
  2.  Configura la base de datos en el archivo application.properties:
- 3.  ```sh
+   ```sh
      spring.application.name=foro
 
 spring.datasource.url=jdbc:mariadb://localhost:3306/foro
@@ -85,7 +86,8 @@ spring.flyway.baseline-on-migrate=true
 
 # Otras configuraciones
 spring.flyway.locations=classpath:db/migration
+```
 
-1. Ejecuta las migraciones de la base de datos con Flyway:
+
 
    
